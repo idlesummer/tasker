@@ -192,7 +192,7 @@ These might get fixed eventually, or they might not. PRs welcome if you want to 
 
 ## Contributing
 
-Found a bug? Want to add a feature? Awesome!
+Found a bug? Want to add a feature?
 
 1. Check [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for guidelines
 2. Open an issue or PR
