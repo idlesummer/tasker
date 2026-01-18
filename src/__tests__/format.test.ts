@@ -36,7 +36,6 @@ describe('fileList', () => {
       writeFileSync(join(testDir, 'file2.txt'), 'World')
 
       const result = fileList(testDir)
-
       expect(result).toContain('file1.txt')
       expect(result).toContain('file2.txt')
       expect(result).toContain('2 files, total:')
@@ -47,7 +46,6 @@ describe('fileList', () => {
       writeFileSync(join(testDir, 'test.txt'), 'A'.repeat(1000))
 
       const result = fileList(testDir)
-
       expect(result).toContain('test.txt')
       expect(result).toContain('1 kB')
     })
@@ -57,7 +55,6 @@ describe('fileList', () => {
       writeFileSync(join(testDir, 'subdir', 'nested.txt'), 'Nested')
 
       const result = fileList(testDir)
-
       expect(result).toContain('root.txt')
       expect(result).toContain('subdir/nested.txt')
       expect(result).toContain('2 files, total:')
@@ -69,7 +66,6 @@ describe('fileList', () => {
       writeFileSync(join(testDir, 'file3.txt'), 'Another text file')
 
       const result = fileList(testDir, '*.txt')
-
       expect(result).toContain('file1.txt')
       expect(result).toContain('file3.txt')
       expect(result).not.toContain('file2.js')
@@ -85,7 +81,6 @@ describe('fileList', () => {
       writeFileSync(join(testDir, 'dist', 'index.js'), 'Built')
 
       const result = fileList(testDir, 'src/**/*.ts')
-
       expect(result).toContain('src/index.ts')
       expect(result).toContain('src/utils.ts')
       expect(result).not.toContain('dist/index.js')
@@ -98,14 +93,12 @@ describe('fileList', () => {
       writeFileSync(join(testDir, 'file2.txt'), 'B'.repeat(500))
 
       const result = fileList(testDir)
-
       // Total should be 1000 bytes (1 kB)
       expect(result).toContain('1 kB')
     })
 
     it('should handle empty directories', () => {
       const result = fileList(testDir)
-
       expect(result).toContain('0 files, total:')
       expect(result).toContain('0 B')
     })
@@ -114,7 +107,6 @@ describe('fileList', () => {
       writeFileSync(join(testDir, 'short.txt'), 'Content')
 
       const result = fileList(testDir, '**/*', 20)
-
       // Check that padding is applied (path should be followed by spaces)
       const lines = result.split('\n')
       const fileLine = lines.find((line) => line.includes('short.txt'))
@@ -126,7 +118,6 @@ describe('fileList', () => {
       writeFileSync(join(testDir, 'subdir1', 'subdir2', 'file.txt'), 'Content')
 
       const result = fileList(testDir)
-
       // Should use forward slashes regardless of OS
       expect(result).toContain('subdir1/subdir2/file.txt')
     })
@@ -138,7 +129,6 @@ describe('fileList', () => {
       writeFileSync(join(testDir, 'file.json'), 'JSON')
 
       const result = fileList(testDir, '*.{js,ts}')
-
       expect(result).not.toContain('file.txt')
       expect(result).toContain('file.js')
       expect(result).toContain('file.ts')
@@ -152,7 +142,6 @@ describe('fileList', () => {
       writeFileSync(join(testDir, 'medium.txt'), 'A'.repeat(10000))
 
       const result = fileList(testDir)
-
       expect(result).toContain('tiny.txt')
       expect(result).toContain('small.txt')
       expect(result).toContain('medium.txt')
@@ -167,7 +156,6 @@ describe('fileList', () => {
 
       // Should have at least 2 lines (file + footer)
       expect(lines.length).toBeGreaterThanOrEqual(2)
-
       // Last line should be the footer with total
       const footer = lines[lines.length - 1]
       expect(footer).toContain('files, total:')
