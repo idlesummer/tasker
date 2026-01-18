@@ -1,6 +1,6 @@
 # @idlesummer/tasker
 
-A simple, lightweight task pipeline runner with CLI spinners and formatters for Node.js build tools.
+A simple, lightweight declarative task pipeline runner with CLI spinners and formatters for Node.js build tools.
 
 > **⚠️ Learning Project Notice**
 > Hey! Just so you know, this is a learning project I built to understand task pipelines and build tools better. It works and I use it for my own stuff, but there might be bugs or rough edges. Feel free to use it, but maybe don't bet your production deploy on it just yet. Contributions and bug reports are super welcome though!
