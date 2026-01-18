@@ -160,7 +160,7 @@ describe('pipe', () => {
       await pipeline.run({})
 
       expect(onSuccess).toHaveBeenCalled()
-      const duration = onSuccess.mock.calls[0][1]
+      const duration = onSuccess.mock.calls[0]![1]
       expect(duration).toBeGreaterThanOrEqual(10)
     })
   })
