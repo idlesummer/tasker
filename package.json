@@ -11,8 +11,12 @@
     "spinner",
     "cli"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idlesummer/task-runner.git"
+  },
   "license": "MIT",
-  "author": "idlesummer",
+  "author": "idlesummer <09louisthebob@gmail.com> (https://github.com/idlesummer)",
   "workspaces": [
     "examples/*"
   ],
@@ -23,14 +27,12 @@
       "require": "./dist/index.js"
     }
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "build": "tsdown",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "fdir": "^6.4.2",
