@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitest/config'
 
-export default defineConfig({
+const vitestConfig = defineConfig({
   test: {
     globals: true,
     environment: 'node',
@@ -17,3 +17,5 @@ export default defineConfig({
     },
   },
 })
+
+export default vitestConfig
