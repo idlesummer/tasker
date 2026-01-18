@@ -6,30 +6,26 @@ export type Context = Record<string, unknown>
 /**
  * A task that runs in a pipeline
  * @template TContext - The context type for this task
+ * @property name - Task name shown in spinner
+ * @property run - Task implementation - return updates to merge into context
+ * @property onSuccess - Optional success message (default: task name)
+ * @property onError - Optional error message (default: task name)
  */
 export interface Task<TContext extends Context> {
-  /** Task name shown in spinner */
   name: string
-
-  /** Task implementation - return updates to merge into context */
   run: (ctx: TContext) => Promise<Partial<TContext> | void>
-
-  /** Optional success message (default: task name) */
   onSuccess?: (ctx: TContext, duration: number) => string
-
-  /** Optional error message (default: task name) */
   onError?: (error: Error) => string
 }
 
 /**
  * Result after running a pipeline
  * @template TContext - The context type
+ * @property context - Final context after all tasks
+ * @property duration - Total duration in milliseconds
  */
 export type PipeResult<TContext extends Context> = {
-  /** Final context after all tasks */
   context: TContext
-
-  /** Total duration in milliseconds */
   duration: number
 }
 
