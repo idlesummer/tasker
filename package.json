@@ -1,6 +1,7 @@
 {
   "name": "@idlesummer/task-runner",
   "version": "1.0.0",
+  "type": "module",
   "description": "A simple task pipeline runner with CLI spinners and formatters",
   "keywords": [
     "task",
@@ -12,6 +13,9 @@
   ],
   "license": "MIT",
   "author": "idlesummer",
+  "workspaces": [
+    "examples/*"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
