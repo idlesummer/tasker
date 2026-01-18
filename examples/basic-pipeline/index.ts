@@ -1,4 +1,4 @@
-import { pipe, type Context } from '../src/index.js'
+import { pipe, type Context } from '@idlesummer/task-runner'
 
 // Define your context type
 interface MyContext extends Context {

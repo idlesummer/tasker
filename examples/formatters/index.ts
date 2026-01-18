@@ -1,4 +1,4 @@
-import { bytes, duration, fileList } from '../src/index.js'
+import { bytes, duration, fileList } from '@idlesummer/task-runner'
 
 // Example 1: Format bytes
 console.log('=== Bytes Formatter ===')
