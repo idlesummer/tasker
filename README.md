@@ -42,27 +42,37 @@ console.log(`Done in ${result.duration}ms`)
 
 ## Examples
 
-Check out the [`examples`](./examples) directory for more examples:
+Check out the [`examples`](./examples) directory for standalone example projects:
 
-- **[basic-pipeline.ts](./examples/basic-pipeline.ts)** - Simple pipeline with multiple tasks
-- **[build-tool.ts](./examples/build-tool.ts)** - Realistic build tool example with file operations
-- **[formatters.ts](./examples/formatters.ts)** - Using the formatting utilities
+- **[basic-pipeline](./examples/basic-pipeline)** - Simple pipeline with multiple tasks
+- **[build-tool](./examples/build-tool)** - Realistic build tool example with file operations
+- **[formatters](./examples/formatters)** - Using the formatting utilities
 
 ### Running Examples
+
+Each example is a standalone package that imports from `@idlesummer/task-runner`:
 
 ```bash
 # Clone the repository
 git clone https://github.com/idlesummer/task-runner.git
 cd task-runner
 
-# Install dependencies
+# Install root dependencies and build the package
+npm install
+npm run build
+
+# Navigate to an example
+cd examples/basic-pipeline
+
+# Install example dependencies
 npm install
 
-# Run an example with tsx or ts-node
-npx tsx examples/basic-pipeline.ts
-npx tsx examples/build-tool.ts
-npx tsx examples/formatters.ts
+# Build and run the example
+npm run build
+npm start
 ```
+
+See the [examples README](./examples/README.md) for more details.
 
 ## API Reference
 
