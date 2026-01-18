@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { pipe  } from '../pipeline'
+import { pipe } from '../pipeline'
 import type { Ora } from 'ora'
 import type { Context, Task } from '../pipeline'
 
