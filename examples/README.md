@@ -1,6 +1,6 @@
 # Examples
 
-This directory contains standalone example projects demonstrating how to use `@idlesummer/task-runner`.
+This directory contains standalone example projects demonstrating how to use `@idlesummer/tasker`.
 
 ## Available Examples
 
@@ -52,4 +52,4 @@ Each example contains:
 - `package.json` - Package configuration with workspace dependency
 - `tsconfig.json` - TypeScript configuration
 
-The examples use `workspace:*` to reference the parent `@idlesummer/task-runner` package, which means they import from the actual built package rather than source files. This demonstrates realistic usage.
+The examples use `workspace:*` to reference the parent `@idlesummer/tasker` package, which means they import from the actual built package rather than source files. This demonstrates realistic usage.

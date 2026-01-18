@@ -1,5 +1,5 @@
-import { pipe, duration, bytes } from '@idlesummer/task-runner'
-import type { Context } from '@idlesummer/task-runner'
+import { pipe, duration, bytes } from '@idlesummer/tasker'
+import type { Context } from '@idlesummer/tasker'
 
 // Define context to track build state across tasks
 interface BuildContext extends Context {

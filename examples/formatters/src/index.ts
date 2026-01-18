@@ -1,4 +1,4 @@
-import { bytes, duration, fileList } from '@idlesummer/task-runner'
+import { bytes, duration, fileList } from '@idlesummer/tasker'
 
 async function main() {
   // Example 1: Format bytes

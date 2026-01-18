@@ -1,5 +1,5 @@
-import { pipe } from '@idlesummer/task-runner'
-import type { Context } from '@idlesummer/task-runner'
+import { pipe } from '@idlesummer/tasker'
+import type { Context } from '@idlesummer/tasker'
 
 interface BuildContext extends Context {
   configured?: boolean

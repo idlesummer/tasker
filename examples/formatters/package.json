@@ -7,7 +7,7 @@
     "start": "tsx src/index.ts"
   },
   "dependencies": {
-    "@idlesummer/task-runner": "file:../.."
+    "@idlesummer/tasker": "file:../.."
   },
   "devDependencies": {
     "@types/node": "^22.10.5",

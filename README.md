@@ -1,4 +1,4 @@
-# @idlesummer/task-runner
+# @idlesummer/tasker
 
 A simple, lightweight task pipeline runner with CLI spinners and formatters for Node.js build tools.
 
@@ -12,13 +12,13 @@ A simple, lightweight task pipeline runner with CLI spinners and formatters for 
 ## Installation
 
 ```bash
-npm install @idlesummer/task-runner
+npm install @idlesummer/tasker
 ```
 
 ## Quick Start
 
 ```typescript
-import { pipe, type Context } from '@idlesummer/task-runner'
+import { pipe, type Context } from '@idlesummer/tasker'
 
 interface MyContext extends Context {
   count?: number
@@ -50,12 +50,12 @@ Check out the [`examples`](./examples) directory for standalone example projects
 
 ### Running Examples
 
-Each example is a standalone package that imports from `@idlesummer/task-runner`:
+Each example is a standalone package that imports from `@idlesummer/tasker`:
 
 ```bash
 # Clone the repository
-git clone https://github.com/idlesummer/task-runner.git
-cd task-runner
+git clone https://github.com/idlesummer/tasker.git
+cd tasker
 
 # Install root dependencies and build the package
 npm install
@@ -120,7 +120,7 @@ const result = await pipeline.run({})
 Formats byte sizes into human-readable strings.
 
 ```typescript
-import { bytes } from '@idlesummer/task-runner'
+import { bytes } from '@idlesummer/tasker'
 
 console.log(bytes(1234))        // "1.23 kB"
 console.log(bytes(1234567))     // "1.23 MB"
@@ -132,7 +132,7 @@ console.log(bytes(1234567890))  // "1.23 GB"
 Formats milliseconds into human-readable durations.
 
 ```typescript
-import { duration } from '@idlesummer/task-runner'
+import { duration } from '@idlesummer/tasker'
 
 console.log(duration(42))       // "42ms"
 console.log(duration(1234))     // "1.2s"
@@ -145,7 +145,7 @@ console.log(duration(123456))   // "2m 3.5s"
 Displays a formatted list of files in a directory with their sizes.
 
 ```typescript
-import { fileList } from '@idlesummer/task-runner'
+import { fileList } from '@idlesummer/tasker'
 
 // List all files
 console.log(fileList('./dist'))
