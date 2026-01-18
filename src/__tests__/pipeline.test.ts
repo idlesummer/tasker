@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { pipe, type Context, type Task } from './pipeline'
+import { pipe, type Context, type Task } from '../pipeline'
 
 // Mock ora to avoid spinner output in tests
 vi.mock('ora', () => ({
