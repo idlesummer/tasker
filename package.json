@@ -10,8 +10,13 @@
     "spinner",
     "cli"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idlesummer/task-runner.git"
+  },
   "license": "MIT",
-  "author": "idlesummer",
+  "author": "idlesummer <09louisthebob@gmail.com> (https://github.com/idlesummer)",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -25,7 +30,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsdown",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
