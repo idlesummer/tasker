@@ -39,12 +39,12 @@ npm publish --access public
 
 Check it worked:
 ```bash
-npm view @idlesummer/tasker
+npm view @idlesummer/<project>
 ```
 
 Your package is now live at:
-- npm: `https://npmjs.com/package/@idlesummer/tasker`
-- Install: `npm install @idlesummer/tasker`
+- npm: `https://npmjs.com/package/@idlesummer/<project>`
+- Install: `npm install @idlesummer/<project>`
 
 ## Common Issues
 
@@ -76,7 +76,7 @@ npm pack --dry-run
 npm whoami
 
 # Check if package name is available
-npm view @idlesummer/tasker  # Should 404 if available
+npm view @idlesummer/<project>  # Should 404 if available
 ```
 
 ## Version Numbering
