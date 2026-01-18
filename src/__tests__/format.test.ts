@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { mkdirSync, writeFileSync, rmSync } from 'fs'
 import { join } from 'path'
-import { bytes, duration, fileList } from './format'
+import { bytes, duration, fileList } from '../format'
 
 describe('format', () => {
   describe('bytes', () => {
