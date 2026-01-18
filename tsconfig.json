@@ -1,0 +1,48 @@
+// TypeScript configuration
+// - Defines the TypeScript program: module resolution, paths, JSX, and type checking
+// - Declaration shape and metadata (declaration, maps, sourcemaps)
+// - Does NOT control what files are built or how they are bundled
+
+{
+  "compilerOptions": {
+
+    // Language & Module
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext"],
+
+    // Module resolution
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+
+    // Path Mapping
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    // Emit
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "noEmit": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+
+    // Type Checking
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Advanced
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.config.ts"]
+}
