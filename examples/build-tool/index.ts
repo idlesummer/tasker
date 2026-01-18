@@ -1,4 +1,4 @@
-import { pipe, duration } from '@idlesummer/task-runner'
+import { pipe, duration, bytes } from '@idlesummer/task-runner'
 import type { Context } from '@idlesummer/task-runner'
 
 interface BuildContext extends Context {
@@ -40,7 +40,7 @@ async function main() {
         await delay(1500)
         return { bundleSize: 45600 }
       },
-      onSuccess: (ctx) => `Created bundle (${(ctx.bundleSize! / 1024).toFixed(1)} KB)`,
+      onSuccess: (ctx) => `Created bundle (${bytes(ctx.bundleSize!)})`,
     },
   ])
 
