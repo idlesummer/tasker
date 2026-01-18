@@ -37,6 +37,7 @@
   ],
   "scripts": {
     "build": "tsdown",
+    "lint": "eslint",
     "prepare": "npm run build"
   },
   "dependencies": {
@@ -49,10 +50,14 @@
     "tsx": "^4.21.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "@types/node": "^22.10.5",
     "@types/picomatch": "^3.0.1",
+    "eslint": "^9.39.2",
+    "globals": "^17.0.0",
     "tsdown": "^0.20.0-beta.3",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.53.0"
   },
   "engines": {
     "node": ">=18"

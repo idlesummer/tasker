@@ -18,11 +18,11 @@ const pipeline = pipe<MyContext>([
   },
   {
     name: 'Process data',
+    onSuccess: (ctx) => `Processed data (count: ${ctx.count})`,
     run: async (ctx) => {
       await new Promise(resolve => setTimeout(resolve, 1500))
       return { count: (ctx.count ?? 0) + 10 }
     },
-    onSuccess: (ctx) => `Processed data (count: ${ctx.count})`,
   },
   {
     name: 'Finalize',

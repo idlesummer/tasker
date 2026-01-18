@@ -28,11 +28,10 @@ export const duration = prettyMs
  * @returns Formatted file list with sizes and total
  */
 export function fileList(baseDir: string, pattern = '**/*', width = 45) {
-
   // Find all files matching the pattern
   const files = new fdir()
     .withRelativePaths()
-    .withGlobFunction(pm)  // ← Add this line
+    .withGlobFunction(pm)
     .glob(pattern)
     .crawl(baseDir)
     .sync()
@@ -46,7 +45,7 @@ export function fileList(baseDir: string, pattern = '**/*', width = 45) {
     }
   })
 
-  const total = stats.reduce((sum, item) => sum + item.size, 0)
+  const total = stats.reduce((sum, stat) => sum + stat.size, 0)
   const lines = stats.map(({ path, size }) => {
     const paddedPath = pc.cyan(path.padEnd(width))
     const formattedSize = pc.dim(bytes(size))
