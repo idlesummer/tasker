@@ -23,7 +23,7 @@ export const duration = prettyMs
 /**
  * Display a formatted list of files in a directory with their sizes
  * @param baseDir - The base directory to search
- * @param pattern - Glob pattern to match files (default: "**/*")
+ * @param pattern - Glob pattern to match files (default: "**\/*")
  * @returns Formatted file list with sizes and total
  */
 export function fileList(baseDir: string, pattern = '**/*') {
