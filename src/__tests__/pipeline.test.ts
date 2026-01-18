@@ -110,7 +110,7 @@ describe('pipe', () => {
         start: vi.fn().mockReturnThis(),
         succeed: mockSucceed,
         fail: vi.fn().mockReturnThis(),
-      } as Ora)
+      } as Partial<Ora> as Ora)
 
       const task: Task<TestContext> = { name: 'Default message task', run: async () => ({}) }
       const pipeline = pipe([task])
@@ -125,7 +125,7 @@ describe('pipe', () => {
         start: vi.fn().mockReturnThis(),
         succeed: mockSucceed,
         fail: vi.fn().mockReturnThis(),
-      } as Ora)
+      } as Partial<Ora> as Ora)
 
       const task: Task<TestContext> = {
         name: 'Task',
@@ -188,7 +188,7 @@ describe('pipe', () => {
         start: vi.fn().mockReturnThis(),
         succeed: vi.fn().mockReturnThis(),
         fail: mockFail,
-      } as Ora)
+      } as Partial<Ora> as Ora)
 
       const task: Task<TestContext> = {
         name: 'Task',
