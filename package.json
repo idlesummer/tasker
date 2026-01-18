@@ -1,7 +1,6 @@
 {
   "name": "@idlesummer/tasker",
   "version": "1.0.0",
-  "type": "module",
   "description": "A simple task pipeline runner with CLI spinners and formatters",
   "keywords": [
     "task",
@@ -17,6 +16,7 @@
   },
   "license": "MIT",
   "author": "idlesummer <09louisthebob@gmail.com> (https://github.com/idlesummer)",
+  "type": "module",
   "exports": {
     ".": {
       "import": {
@@ -38,11 +38,11 @@
   "scripts": {
     "build": "tsdown",
     "lint": "eslint",
+    "prepare": "npm run build",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
-    "prepare": "npm run build"
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "fdir": "^6.4.2",
