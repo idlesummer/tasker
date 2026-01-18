@@ -40,7 +40,8 @@
     "picocolors": "^1.1.1",
     "picomatch": "^4.0.2",
     "pretty-bytes": "^6.1.1",
-    "pretty-ms": "^9.2.0"
+    "pretty-ms": "^9.2.0",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.5",
