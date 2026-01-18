@@ -157,7 +157,8 @@ describe('pipe', () => {
       const pipeline = pipe([task])
       await pipeline.run({})
       expect(onSuccess).toHaveBeenCalled()
-      const duration = onSuccess.mock.calls[0]![1]  // Safe to assert since the function was called above
+      // Safe to use [0]! because we've verified the function was called above
+      const duration = onSuccess.mock.calls[0]![1]
       expect(duration).toBeGreaterThanOrEqual(10)
     })
   })
