@@ -202,7 +202,7 @@ Even if you're new to open source, feel free to contribute. I'm learning too!
 
 ## License
 
-MIT - do whatever you want with this.
+MIT - See [LICENSE](LICENSE) file
 
 ## Questions?
 
