@@ -2,12 +2,19 @@
 
 A simple, lightweight task pipeline runner with CLI spinners and formatters for Node.js build tools.
 
+> **⚠️ Learning Project Notice**
+> Hey! Just so you know, this is a learning project I built to understand task pipelines and build tools better. It works and I use it for my own stuff, but there might be bugs or rough edges. Feel free to use it, but maybe don't bet your production deploy on it just yet. Contributions and bug reports are super welcome though!
+
+## What's This?
+
+Basically, it's a simple way to run tasks in sequence with nice terminal spinners. I got tired of writing the same boilerplate for build scripts, so I made this. Think of it like a mini task runner - simpler than Gulp but more structured than a bash script.
+
 ## Features
 
-- **Task Pipeline**: Run tasks sequentially with context sharing
-- **CLI Spinners**: Beautiful terminal spinners powered by ora
-- **Formatters**: Utilities for formatting bytes, durations, and file lists
-- **TypeScript**: Full type safety with generics
+- **Task Pipeline** - Run tasks one after another, each task gets the results from the previous ones
+- **CLI Spinners** - Those satisfying loading spinners powered by ora
+- **Formatters** - Helper functions to make bytes, durations, and file lists look nice
+- **TypeScript** - Full type safety so you don't shoot yourself in the foot
 
 ## Installation
 
@@ -16,6 +23,8 @@ npm install @idlesummer/tasker
 ```
 
 ## Quick Start
+
+Here's the simplest example:
 
 ```typescript
 import { pipe, type Context } from '@idlesummer/tasker'
@@ -40,124 +49,172 @@ const result = await pipeline.run({})
 console.log(`Done in ${result.duration}ms`)
 ```
 
-## Examples
+That's it! You get:
+- Spinners while tasks run ✨
+- Type-safe context passing between tasks
+- Timing info automatically
 
-Check out the [`examples`](./examples) directory for standalone example projects:
+## Why Would I Use This?
 
-- **[basic-pipeline](./examples/basic-pipeline)** - Simple pipeline with multiple tasks
-- **[build-tool](./examples/build-tool)** - Realistic build tool example with file operations
-- **[formatters](./examples/formatters)** - Using the formatting utilities
+Good question! Use this if you:
+- Want to build a simple CLI tool or build script
+- Like seeing spinners while stuff happens
+- Need tasks to share data between each other
+- Want something lighter than Gulp but more structured than raw scripts
 
-### Running Examples
+Don't use this if you:
+- Need parallel task execution (tasks run sequentially here)
+- Want a mature, battle-tested solution (this is a learning project!)
+- Need a full-featured task runner (look at Gulp, Grunt, etc.)
 
-Each example is a standalone package that imports from `@idlesummer/tasker`:
+## Documentation
+
+I wrote pretty detailed docs with a casual tone (because formal docs are boring):
+
+- **[API Reference](./docs/API.md)** - All the functions and types explained
+- **[Examples](./docs/EXAMPLES.md)** - Real code you can copy-paste
+- **[Architecture](./docs/ARCHITECTURE.md)** - How it works under the hood
+- **[Contributing](./docs/CONTRIBUTING.md)** - Want to help? Start here
+- **[Troubleshooting](./docs/TROUBLESHOOTING.md)** - Common issues and fixes
+
+## Example Projects
+
+The `examples/` folder has working projects you can run:
+
+- **[basic-pipeline](./examples/basic-pipeline)** - Super simple example to get started
+- **[build-tool](./examples/build-tool)** - More realistic build tool with file operations
+- **[formatters](./examples/formatters)** - Shows off all the formatting utilities
+
+Each example is a standalone npm package. To run one:
 
 ```bash
-# Clone the repository
+# Clone and setup
 git clone https://github.com/idlesummer/tasker.git
 cd tasker
-
-# Install root dependencies and build the package
 npm install
 npm run build
 
-# Navigate to an example
+# Try an example
 cd examples/basic-pipeline
-
-# Install example dependencies
 npm install
-
-# Build and run the example
 npm run build
 npm start
 ```
 
-See the [examples README](./examples/README.md) for more details.
+See the [examples README](./examples/README.md) for more info.
 
-## API Reference
+## Quick API Overview
 
 ### Pipeline
 
-#### `pipe<TContext>(tasks: Task<TContext>[])`
-
-Creates a task pipeline that runs tasks sequentially with CLI spinners.
-
-```typescript
-interface Task<TContext extends Context> {
-  name: string
-  run: (ctx: TContext) => Promise<Partial<TContext> | void>
-  onSuccess?: (ctx: TContext, duration: number) => string
-  onError?: (error: Error) => string
-}
-```
-
-**Returns:** An object with a `run` method that executes the pipeline.
-
-**Example:**
+Create a pipeline with tasks:
 
 ```typescript
 const pipeline = pipe([
   {
-    name: 'Task 1',
-    run: async () => {
-      // Task implementation
-      return { key: 'value' }
+    name: 'Task name',
+    run: async (ctx) => {
+      // Do stuff
+      return { key: 'value' }  // Updates context
     },
-    onSuccess: (ctx, duration) => `Task 1 completed in ${duration}ms`,
-    onError: (error) => `Task 1 failed: ${error.message}`,
-  },
+    onSuccess: (ctx, duration) => 'Custom success message',
+    onError: (error) => 'Custom error message'
+  }
 ])
 
 const result = await pipeline.run({})
-// result.context contains the final context
-// result.duration is the total time in milliseconds
+// result.context has your final context
+// result.duration is total time in ms
 ```
 
 ### Formatters
 
-#### `bytes(size: number): string`
-
-Formats byte sizes into human-readable strings.
+Make numbers pretty:
 
 ```typescript
-import { bytes } from '@idlesummer/tasker'
+import { bytes, duration, fileList } from '@idlesummer/tasker'
 
-console.log(bytes(1234))        // "1.23 kB"
-console.log(bytes(1234567))     // "1.23 MB"
-console.log(bytes(1234567890))  // "1.23 GB"
+console.log(bytes(1234567))        // "1.23 MB"
+console.log(duration(12345))       // "12.3s"
+console.log(fileList('./dist'))    // Formatted file list with sizes
 ```
 
-#### `duration(ms: number): string`
+Check [API.md](./docs/API.md) for the full reference.
 
-Formats milliseconds into human-readable durations.
+## A More Real Example
+
+Here's what a build script might look like:
 
 ```typescript
-import { duration } from '@idlesummer/tasker'
+import { pipe, fileList, duration } from '@idlesummer/tasker'
+import { exec } from 'child_process'
+import { promisify } from 'util'
 
-console.log(duration(42))       // "42ms"
-console.log(duration(1234))     // "1.2s"
-console.log(duration(12345))    // "12.3s"
-console.log(duration(123456))   // "2m 3.5s"
+const execAsync = promisify(exec)
+
+const build = pipe([
+  {
+    name: 'Clean dist folder',
+    run: async () => {
+      await execAsync('rm -rf dist')
+    }
+  },
+  {
+    name: 'Compile TypeScript',
+    run: async () => {
+      await execAsync('tsc')
+    },
+    onSuccess: () => 'TypeScript compiled successfully'
+  },
+  {
+    name: 'Show output',
+    run: async () => {
+      console.log('\nBuild output:')
+      console.log(fileList('./dist'))
+    }
+  }
+])
+
+console.log('🏗️  Building...\n')
+const result = await build.run({})
+console.log(`\n✅ Done in ${duration(result.duration)}`)
 ```
 
-#### `fileList(baseDir: string, pattern?: string): string`
+You get nice spinners for each step, and a clean output at the end.
 
-Displays a formatted list of files in a directory with their sizes.
+## Known Issues / Limitations
 
-```typescript
-import { fileList } from '@idlesummer/tasker'
+Since this is a learning project:
+- Tasks run sequentially only (no parallel execution yet)
+- No built-in retry logic
+- Error handling is basic (task fails = pipeline stops)
+- Haven't tested with huge codebases
 
-// List all files
-console.log(fileList('./dist'))
+These might get fixed eventually, or they might not. PRs welcome if you want to add features!
 
-// List files matching a pattern
-console.log(fileList('./dist', '**/*.js'))
-console.log(fileList('./dist', '*.json'))
-```
+## Contributing
 
-**Output format:**
-```
-  path/to/file1.js                              1.23 kB
-  path/to/file2.js                              4.56 kB
-  3 files, total:                               5.79 kB
-```
+Found a bug? Want to add a feature? Awesome!
+
+1. Check [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for guidelines
+2. Open an issue or PR
+3. Be nice (we're all learning here)
+
+Even if you're new to open source, feel free to contribute. I'm learning too!
+
+## License
+
+MIT - do whatever you want with this.
+
+## Questions?
+
+- Check the [docs](./docs/)
+- Look at the [examples](./examples/)
+- Open an issue
+- Read the [troubleshooting guide](./docs/TROUBLESHOOTING.md)
+
+---
+
+Made with ☕ and procrastination by [@idlesummer](https://github.com/idlesummer)
+
+If this helps you, cool! If you find bugs, let me know. If you want to improve it, send a PR. Let's learn together!
