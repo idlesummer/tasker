@@ -11,9 +11,7 @@ describe('fileList', () => {
       try {
         rmSync(testDir, { recursive: true, force: true })
       }
-      catch {
-        // Ignore errors
-      }
+      catch { /* Ignore errors */ }
 
       // Create test directory structure
       mkdirSync(testDir, { recursive: true })
@@ -25,9 +23,7 @@ describe('fileList', () => {
       try {
         rmSync(testDir, { recursive: true, force: true })
       }
-      catch {
-        // Ignore errors
-      }
+      catch { /* Ignore errors */ }
     })
 
     it('should list all files in a directory', () => {
