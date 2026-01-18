@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { mkdirSync, writeFileSync, rmSync } from 'fs'
 import { join } from 'path'
+import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { fileList } from '../format'
 
 describe('fileList', () => {
