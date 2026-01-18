@@ -1,10 +1,10 @@
 {
-  "name": "basic-pipeline-example",
+  "name": "basic-pipeline",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "tsc && node dist/index.js"
+    "start": "tsx src/index.ts"
   },
   "dependencies": {
     "@idlesummer/task-runner": "file:../.."

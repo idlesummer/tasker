@@ -26,7 +26,6 @@
     // Emit
     "outDir": "./dist",
     "rootDir": "./src",
-    "noEmit": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,

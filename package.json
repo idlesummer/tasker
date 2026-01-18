@@ -1,6 +1,7 @@
 {
   "name": "@idlesummer/task-runner",
   "version": "1.0.0",
+  "type": "module",
   "description": "A simple task pipeline runner with CLI spinners and formatters",
   "keywords": [
     "task",
@@ -16,7 +17,6 @@
   },
   "license": "MIT",
   "author": "idlesummer <09louisthebob@gmail.com> (https://github.com/idlesummer)",
-  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -24,8 +24,6 @@
       "require": "./dist/index.js"
     }
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -34,7 +32,7 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "prepublishOnly": "npm run build"
+    "prepare": "npm run build"
   },
   "dependencies": {
     "fdir": "^6.4.2",
@@ -42,7 +40,8 @@
     "picocolors": "^1.1.1",
     "picomatch": "^4.0.2",
     "pretty-bytes": "^6.1.1",
-    "pretty-ms": "^9.2.0"
+    "pretty-ms": "^9.2.0",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.5",
