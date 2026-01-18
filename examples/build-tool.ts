@@ -1,5 +1,5 @@
 import { writeFileSync, mkdirSync, rmSync } from 'fs'
-import { pipe, type Context, duration, fileList } from '@idlesummer/task-runner'
+import { pipe, type Context, duration, fileList } from '../src/index.js'
 
 // Build context with typed properties
 interface BuildContext extends Context {

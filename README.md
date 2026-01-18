@@ -50,6 +50,8 @@ Check out the [`examples`](./examples) directory for more examples:
 
 ### Running Examples
 
+The examples use relative imports from the local source files:
+
 ```bash
 # Clone the repository
 git clone https://github.com/idlesummer/task-runner.git
@@ -58,7 +60,7 @@ cd task-runner
 # Install dependencies
 npm install
 
-# Run an example with tsx or ts-node
+# Run examples with tsx (no build needed)
 npx tsx examples/basic-pipeline.ts
 npx tsx examples/build-tool.ts
 npx tsx examples/formatters.ts
