@@ -37,7 +37,7 @@ describe('pipe', () => {
 
     it('should execute multiple tasks sequentially', async () => {
       const tasks: Task<TestContext>[] = [
-        { name: 'Task 1', run: async () => ({ count: 1 })},
+        { name: 'Task 1', run: async () => ({ count: 1 }) },
         { name: 'Task 2', run: async (ctx) => ({ count: (ctx.count ?? 0) + 1 }) },
         { name: 'Task 3', run: async (ctx) => ({ count: (ctx.count ?? 0) + 1 }) },
       ]
