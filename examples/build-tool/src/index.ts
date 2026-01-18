@@ -1,70 +1,56 @@
-import { writeFileSync, mkdirSync, rmSync } from 'fs'
-import { pipe, type Context, duration, fileList } from '@idlesummer/task-runner'
+import { pipe, duration } from '@idlesummer/task-runner'
+import type { Context } from '@idlesummer/task-runner'
 
-// Build context with typed properties
 interface BuildContext extends Context {
   outputDir?: string
-  files?: string[]
-  buildTime?: number
+  filesCompiled?: number
+  bundleSize?: number
 }
 
-// Create a build pipeline
-const build = pipe<BuildContext>([
-  {
-    name: 'Clean output directory',
-    run: async (ctx) => {
-      const outputDir = './dist'
-      rmSync(outputDir, { recursive: true, force: true })
-      mkdirSync(outputDir, { recursive: true })
-      return { outputDir }
+async function delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+async function main() {
+  const build = pipe<BuildContext>([
+    {
+      name: 'Clean output directory',
+      run: async () => {
+        await delay(300)
+        return { outputDir: './dist' }
+      },
     },
-  },
-  {
-    name: 'Compile TypeScript',
-    run: async () => {
-      // Simulate compilation
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
-      // Create some dummy output files
-      mkdirSync('./dist/src', { recursive: true })
-      writeFileSync('./dist/index.js', 'export * from "./src/main.js";\n')
-      writeFileSync('./dist/src/main.js', 'export function main() { console.log("Hello"); }\n')
-      writeFileSync('./dist/src/utils.js', 'export function util() { return 42; }\n')
-
-      return { files: ['index.js', 'src/main.js', 'src/utils.js'] }
+    {
+      name: 'Compile TypeScript',
+      run: async () => {
+        await delay(2000)
+        return { filesCompiled: 12 }
+      },
+      onSuccess: (ctx, taskDuration) => `Compiled ${ctx.filesCompiled} files in ${duration(taskDuration)}`,
     },
-    onSuccess: (ctx, taskDuration) => `Compiled ${ctx.files?.length} files in ${duration(taskDuration)}`,
-  },
-  {
-    name: 'Generate type definitions',
-    run: async () => {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-
-      writeFileSync('./dist/index.d.ts', 'export * from "./src/main";\n')
-      writeFileSync('./dist/src/main.d.ts', 'export declare function main(): void;\n')
-      writeFileSync('./dist/src/utils.d.ts', 'export declare function util(): number;\n')
+    {
+      name: 'Generate type definitions',
+      run: async () => {
+        await delay(1000)
+      },
     },
-  },
-  {
-    name: 'Bundle and minify',
-    run: async () => {
-      await new Promise(resolve => setTimeout(resolve, 1500))
-
-      // Create a minified bundle
-      writeFileSync('./dist/bundle.min.js', 'export function main(){console.log("Hello")}export function util(){return 42}')
+    {
+      name: 'Bundle and minify',
+      run: async () => {
+        await delay(1500)
+        return { bundleSize: 45600 }
+      },
+      onSuccess: (ctx) => `Created bundle (${(ctx.bundleSize! / 1024).toFixed(1)} KB)`,
     },
-    onSuccess: () => 'Created production bundle',
-  },
-])
+  ])
 
-// Run the build
-console.log('Starting build...\n')
+  try {
+    const result = await build.run({})
+    console.log(`\n✓ Build completed in ${duration(result.duration)}`)
+  } catch {
+    process.exit(1)
+  }
+}
 
-build.run({}).then(result => {
-  console.log('\nBuild output:')
-  console.log(fileList('./dist'))
-  console.log(`\nBuild completed in ${duration(result.duration)}`)
-}).catch(error => {
-  console.error('\nBuild failed:', error.message)
-  process.exit(1)
-})
+await main()
+
