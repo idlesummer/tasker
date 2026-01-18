@@ -6,10 +6,26 @@ import pm from 'picomatch'
 import prettyBytes from 'pretty-bytes'
 import prettyMs from 'pretty-ms'
 
+/**
+ * Formats byte sizes into human-readable strings
+ * @param size - The size in bytes
+ * @returns Formatted string (e.g., "1.23 kB", "4.56 MB")
+ */
 export const bytes = prettyBytes
+
+/**
+ * Formats milliseconds into human-readable durations
+ * @param ms - The duration in milliseconds
+ * @returns Formatted string (e.g., "42ms", "1.2s", "2m 3.5s")
+ */
 export const duration = prettyMs
 
-/** Display a list of files in a directory with their sizes */
+/**
+ * Display a formatted list of files in a directory with their sizes
+ * @param baseDir - The base directory to search
+ * @param pattern - Glob pattern to match files (default: "**/*")
+ * @returns Formatted file list with sizes and total
+ */
 export function fileList(baseDir: string, pattern = '**/*') {
   const WIDTH = 45
 
