@@ -1,6 +1,6 @@
 {
   "name": "@idlesummer/tasker",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A simple task pipeline runner with CLI spinners and formatters",
   "keywords": [
     "task",
