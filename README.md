@@ -7,7 +7,7 @@ A simple, lightweight task pipeline runner with CLI spinners and formatters for 
 
 ## What's This?
 
-Basically, it's a simple way to run tasks in sequence with nice terminal spinners. I got tired of writing the same boilerplate for build scripts, so I made this. Think of it like a mini task runner - simpler than Gulp but more structured than a bash script.
+Basically, it's a simple way to run tasks in sequence with nice terminal spinners. The standard imperative way of writing build scripts seemed unelegant and I wanted something more functional/declarative, so I made this. Think of it like a mini task runner - simpler and lighter than Listr2 but more structured than a bash script.
 
 ## Features
 
@@ -56,7 +56,7 @@ That's it! You get:
 
 ## Why Would I Use This?
 
-Good question! Use this if you:
+Use this if you:
 - Want to build a simple CLI tool or build script
 - Like seeing spinners while stuff happens
 - Need tasks to share data between each other
@@ -68,8 +68,6 @@ Don't use this if you:
 - Need a full-featured task runner (look at Gulp, Grunt, etc.)
 
 ## Documentation
-
-I wrote pretty detailed docs with a casual tone (because formal docs are boring):
 
 - **[API Reference](./docs/API.md)** - All the functions and types explained
 - **[Examples](./docs/EXAMPLES.md)** - Real code you can copy-paste
@@ -113,12 +111,12 @@ Create a pipeline with tasks:
 const pipeline = pipe([
   {
     name: 'Task name',
+    onSuccess: (ctx, duration) => 'Custom success message',
+    onError: (error) => 'Custom error message',
     run: async (ctx) => {
       // Do stuff
       return { key: 'value' }  // Updates context
     },
-    onSuccess: (ctx, duration) => 'Custom success message',
-    onError: (error) => 'Custom error message'
   }
 ])
 
@@ -161,10 +159,10 @@ const build = pipe([
   },
   {
     name: 'Compile TypeScript',
+    onSuccess: () => 'TypeScript compiled successfully',
     run: async () => {
       await execAsync('tsc')
     },
-    onSuccess: () => 'TypeScript compiled successfully'
   },
   {
     name: 'Show output',
