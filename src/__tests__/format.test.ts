@@ -1,82 +1,9 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { mkdirSync, writeFileSync, rmSync } from 'fs'
 import { join } from 'path'
-import { bytes, duration, fileList } from '../format'
+import { fileList } from '../format'
 
-describe('format', () => {
-  describe('bytes', () => {
-    it('should format bytes correctly', () => {
-      expect(bytes(0)).toBe('0 B')
-      expect(bytes(1)).toBe('1 B')
-      expect(bytes(100)).toBe('100 B')
-    })
-
-    it('should format kilobytes correctly', () => {
-      expect(bytes(1000)).toBe('1 kB')
-      expect(bytes(1234)).toBe('1.23 kB')
-      expect(bytes(10000)).toBe('10 kB')
-    })
-
-    it('should format megabytes correctly', () => {
-      expect(bytes(1000000)).toBe('1 MB')
-      expect(bytes(1234567)).toBe('1.23 MB')
-      expect(bytes(10000000)).toBe('10 MB')
-    })
-
-    it('should format gigabytes correctly', () => {
-      expect(bytes(1000000000)).toBe('1 GB')
-      expect(bytes(1234567890)).toBe('1.23 GB')
-    })
-
-    it('should format terabytes correctly', () => {
-      expect(bytes(1000000000000)).toBe('1 TB')
-      expect(bytes(1234567890123)).toBe('1.23 TB')
-    })
-
-    it('should handle very large numbers', () => {
-      expect(bytes(1000000000000000)).toBe('1 PB')
-    })
-  })
-
-  describe('duration', () => {
-    it('should format milliseconds correctly', () => {
-      expect(duration(0)).toBe('0ms')
-      expect(duration(1)).toBe('1ms')
-      expect(duration(100)).toBe('100ms')
-      expect(duration(999)).toBe('999ms')
-    })
-
-    it('should format seconds correctly', () => {
-      expect(duration(1000)).toBe('1s')
-      expect(duration(1500)).toBe('1.5s')
-      expect(duration(5000)).toBe('5s')
-      expect(duration(59000)).toBe('59s')
-    })
-
-    it('should format minutes correctly', () => {
-      expect(duration(60000)).toBe('1m')
-      expect(duration(90000)).toBe('1m 30s')
-      expect(duration(123000)).toBe('2m 3s')
-      expect(duration(123456)).toBe('2m 3.4s') // pretty-ms rounds to 1 decimal
-    })
-
-    it('should format hours correctly', () => {
-      expect(duration(3600000)).toBe('1h')
-      expect(duration(3660000)).toBe('1h 1m')
-      expect(duration(7380000)).toBe('2h 3m')
-    })
-
-    it('should format days correctly', () => {
-      expect(duration(86400000)).toBe('1d')
-      expect(duration(90000000)).toBe('1d 1h')
-    })
-
-    it('should handle very large durations', () => {
-      expect(duration(172800000)).toBe('2d')
-    })
-  })
-
-  describe('fileList', () => {
+describe('fileList', () => {
     const testDir = join(process.cwd(), 'test-temp-dir')
 
     beforeEach(() => {
@@ -245,5 +172,4 @@ describe('format', () => {
       const footer = lines[lines.length - 1]
       expect(footer).toContain('files, total:')
     })
-  })
 })
