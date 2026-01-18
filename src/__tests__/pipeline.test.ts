@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { pipe, type Context, type Task } from '../pipeline'
+import type { Ora } from 'ora'
 
 // Mock ora to avoid spinner output in tests
 vi.mock('ora', () => ({
@@ -147,7 +148,7 @@ describe('pipe', () => {
         start: vi.fn().mockReturnThis(),
         succeed: mockSucceed,
         fail: vi.fn().mockReturnThis(),
-      } as any)
+      } as Ora)
 
       const task: Task<TestContext> = {
         name: 'Default message task',
@@ -167,7 +168,7 @@ describe('pipe', () => {
         start: vi.fn().mockReturnThis(),
         succeed: mockSucceed,
         fail: vi.fn().mockReturnThis(),
-      } as any)
+      } as Ora)
 
       const task: Task<TestContext> = {
         name: 'Task',
@@ -231,7 +232,7 @@ describe('pipe', () => {
         start: vi.fn().mockReturnThis(),
         succeed: vi.fn().mockReturnThis(),
         fail: mockFail,
-      } as any)
+      } as Ora)
 
       const task: Task<TestContext> = {
         name: 'Task',
@@ -272,7 +273,7 @@ describe('pipe', () => {
       const task: Task<TestContext> = {
         name: 'Task',
         run: async () => {
-          throw 'String error'
+          throw new Error('String error')
         },
       }
 
