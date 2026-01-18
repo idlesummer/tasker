@@ -130,8 +130,7 @@ describe('pipe', () => {
       const task: Task<TestContext> = {
         name: 'Task',
         run: async (ctx) => ({ count: (ctx.count ?? 0) + 10 }),
-        onSuccess: (ctx, duration) =>
-          `Processed ${ctx.count ?? 0} items in ${duration}ms`,
+        onSuccess: (ctx, duration) => `Processed ${ctx.count ?? 0} items in ${duration}ms`,
       }
 
       const pipeline = pipe([task])
@@ -145,22 +144,20 @@ describe('pipe', () => {
 
     it('should pass duration to onSuccess callback', async () => {
       const onSuccess = vi.fn((_, duration) => `Done in ${duration}ms`)
-
       const task: Task<TestContext> = {
         name: 'Task',
+        onSuccess,
         run: async () => {
           // Simulate some work
           await new Promise((resolve) => setTimeout(resolve, 10))
           return {}
         },
-        onSuccess,
       }
 
       const pipeline = pipe([task])
       await pipeline.run({})
-
       expect(onSuccess).toHaveBeenCalled()
-      const duration = onSuccess.mock.calls[0][1]
+      const duration = onSuccess.mock.calls[0]![1]  // Safe to assert since the function was called above
       expect(duration).toBeGreaterThanOrEqual(10)
     })
   })
@@ -169,13 +166,10 @@ describe('pipe', () => {
     it('should catch and wrap task errors', async () => {
       const task: Task<TestContext> = {
         name: 'Failing task',
-        run: async () => {
-          throw new Error('Something went wrong')
-        },
+        run: async () => { throw new Error('Something went wrong') },
       }
 
       const pipeline = pipe([task])
-
       await expect(pipeline.run({})).rejects.toThrow(
         'Task "Failing task" failed: Something went wrong',
       )
@@ -192,14 +186,13 @@ describe('pipe', () => {
 
       const task: Task<TestContext> = {
         name: 'Task',
+        onError: (error) => `Custom error: ${error.message}`,
         run: async () => {
           throw new Error('Failed')
         },
-        onError: (error) => `Custom error: ${error.message}`,
       }
 
       const pipeline = pipe([task])
-
       await expect(pipeline.run({})).rejects.toThrow()
       expect(mockFail).toHaveBeenCalledWith('Custom error: Failed')
     })
