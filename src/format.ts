@@ -29,11 +29,11 @@ export const duration = prettyMs
  */
 export function fileList(baseDir: string, pattern = '**/*', width = 45) {
   // Find all files matching the pattern
-  // Normalize paths to forward slashes for cross-platform glob matching
-  const matcher = pm(pattern)
+  // Use windows: true option to handle both / and \ as path separators
+  const matcher = pm(pattern, { windows: true })
   const files = new fdir()
     .withRelativePaths()
-    .filter(path => matcher(path.replace(/\\/g, '/')))
+    .filter(path => matcher(path))
     .crawl(baseDir)
     .sync()
 
