@@ -10,13 +10,10 @@ export type Context = Record<string, unknown>
 export interface Task<TContext extends Context> {
   /** Task name shown in spinner */
   name: string
-
   /** Task implementation - return updates to merge into context */
   run: (ctx: TContext) => Promise<Partial<TContext> | void>
-
   /** Optional success message (default: task name) */
   onSuccess?: (ctx: TContext, duration: number) => string
-
   /** Optional error message (default: task name) */
   onError?: (error: Error) => string
 }
@@ -28,7 +25,6 @@ export interface Task<TContext extends Context> {
 export type PipeResult<TContext extends Context> = {
   /** Final context after all tasks */
   context: TContext
-
   /** Total duration in milliseconds */
   duration: number
 }
