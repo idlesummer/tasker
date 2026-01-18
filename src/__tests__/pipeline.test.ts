@@ -160,6 +160,7 @@ describe('pipe', () => {
       await pipeline.run({})
 
       expect(onSuccess).toHaveBeenCalled()
+      // Safe to use [0]! because we've verified the function was called above
       const duration = onSuccess.mock.calls[0]![1]
       expect(duration).toBeGreaterThanOrEqual(10)
     })
