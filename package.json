@@ -29,6 +29,9 @@
   "files": [
     "dist"
   ],
+  "workspaces": [
+    "examples/*"
+  ],
   "scripts": {
     "build": "tsdown",
     "prepublishOnly": "npm run build"
