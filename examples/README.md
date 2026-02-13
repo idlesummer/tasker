@@ -20,7 +20,33 @@ A realistic build tool example demonstrating:
 - Using the `fileList` formatter to display output
 - Complex build pipeline with multiple steps
 
-### 3. Formatters ([`formatters/`](./formatters))
+### 3. Conditional Tasks ([`conditional-tasks/`](./conditional-tasks))
+
+Demonstrates conditional task execution using boolean expressions:
+- Conditionally include/exclude tasks based on configuration flags
+- Using `condition && task` pattern for conditional execution
+- Building different pipelines for development vs production
+- Command-line flag-based task control
+
+**Example usage:**
+```bash
+# Development build
+npm start
+
+# Production build with minification
+npm start -- --prod
+
+# Production build with bundle analysis
+npm start -- --prod --analyze
+
+# Production build with deployment
+npm start -- --prod --deploy
+
+# Skip tests
+npm start -- --skip-tests
+```
+
+### 4. Formatters ([`formatters/`](./formatters))
 
 Examples of all the formatting utilities:
 - `bytes()` - Format file sizes

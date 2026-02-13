@@ -1,0 +1,17 @@
+{
+  "name": "conditional-tasks",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@idlesummer/tasker": "file:../.."
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.2"
+  }
+}

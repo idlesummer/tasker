@@ -314,4 +314,138 @@ describe('pipe', () => {
       expect(executionOrder).toEqual([1, 2])
     })
   })
+
+  describe('conditional task spreading', () => {
+    it('should filter out false values in task array', async () => {
+      const task1Run = vi.fn(async () => ({ count: 1 }))
+      const task2Run = vi.fn(async () => ({ count: 2 }))
+
+      const tasks = [
+        { name: 'Task 1', run: task1Run },
+        false,
+        { name: 'Task 2', run: task2Run },
+      ]
+
+      const pipeline = pipe(tasks)
+      const result = await pipeline.run({})
+
+      expect(task1Run).toHaveBeenCalled()
+      expect(task2Run).toHaveBeenCalled()
+      expect(result.context.count).toBe(2)
+    })
+
+    it('should filter out null values in task array', async () => {
+      const taskRun = vi.fn(async () => ({ message: 'Hello' }))
+
+      const tasks = [
+        null,
+        { name: 'Task', run: taskRun },
+        null,
+      ]
+
+      const pipeline = pipe(tasks)
+      const result = await pipeline.run({})
+
+      expect(taskRun).toHaveBeenCalled()
+      expect(result.context.message).toBe('Hello')
+    })
+
+    it('should filter out undefined values in task array', async () => {
+      const taskRun = vi.fn(async () => ({ data: ['test'] }))
+
+      const tasks = [
+        undefined,
+        { name: 'Task', run: taskRun },
+        undefined,
+      ]
+
+      const pipeline = pipe(tasks)
+      const result = await pipeline.run({})
+
+      expect(taskRun).toHaveBeenCalled()
+      expect(result.context.data).toEqual(['test'])
+    })
+
+    it('should support conditional spreading with && operator', async () => {
+      const condition = true
+      const task1Run = vi.fn(async () => ({ step: 1 }))
+      const task2Run = vi.fn(async () => ({ step: 2 }))
+      const task3Run = vi.fn(async () => ({ step: 3 }))
+
+      const tasks = [
+        { name: 'Task 1', run: task1Run },
+        ...(condition && [{ name: 'Task 2', run: task2Run }]),
+        { name: 'Task 3', run: task3Run },
+      ]
+
+      const pipeline = pipe(tasks)
+      const result = await pipeline.run({})
+
+      expect(task1Run).toHaveBeenCalled()
+      expect(task2Run).toHaveBeenCalled()
+      expect(task3Run).toHaveBeenCalled()
+      expect(result.context.step).toBe(3)
+    })
+
+    it('should skip tasks when condition is false', async () => {
+      const condition = false
+      const task1Run = vi.fn(async () => ({ step: 1 }))
+      const task2Run = vi.fn(async () => ({ step: 2 }))
+      const task3Run = vi.fn(async () => ({ step: 3 }))
+
+      const tasks = [
+        { name: 'Task 1', run: task1Run },
+        condition && { name: 'Task 2', run: task2Run },
+        { name: 'Task 3', run: task3Run },
+      ]
+
+      const pipeline = pipe(tasks)
+      const result = await pipeline.run({})
+
+      expect(task1Run).toHaveBeenCalled()
+      expect(task2Run).not.toHaveBeenCalled()
+      expect(task3Run).toHaveBeenCalled()
+      expect(result.context.step).toBe(3)
+    })
+
+    it('should handle multiple conditional tasks', async () => {
+      const enableAuth = true
+      const enableLogging = false
+      const enableCache = true
+
+      const mainTaskRun = vi.fn(async () => ({ main: true }))
+      const authTaskRun = vi.fn(async () => ({ auth: true }))
+      const logTaskRun = vi.fn(async () => ({ log: true }))
+      const cacheTaskRun = vi.fn(async () => ({ cache: true }))
+
+      const tasks = [
+        { name: 'Main', run: mainTaskRun },
+        enableAuth && { name: 'Auth', run: authTaskRun },
+        enableLogging && { name: 'Log', run: logTaskRun },
+        enableCache && { name: 'Cache', run: cacheTaskRun },
+      ]
+
+      const pipeline = pipe(tasks)
+      const result = await pipeline.run({})
+
+      expect(mainTaskRun).toHaveBeenCalled()
+      expect(authTaskRun).toHaveBeenCalled()
+      expect(logTaskRun).not.toHaveBeenCalled()
+      expect(cacheTaskRun).toHaveBeenCalled()
+      expect(result.context).toEqual({
+        main: true,
+        auth: true,
+        cache: true,
+      })
+    })
+
+    it('should handle all falsy values in task array', async () => {
+      const tasks = [false, null, undefined]
+
+      const pipeline = pipe(tasks)
+      const result = await pipeline.run({ initial: 'value' })
+
+      expect(result.context.initial).toBe('value')
+    })
+  })
 })

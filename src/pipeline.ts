@@ -32,14 +32,19 @@ export type PipeResult<TContext extends Context> = {
 /**
  * Creates a task pipeline that runs tasks sequentially with spinners
  * @template TContext - The context type for the pipeline
+ * @param tasks - Array of tasks (supports conditional spreading with falsy values)
  */
-export function pipe<TContext extends Context>(tasks: Task<TContext>[]) {
+export function pipe<TContext extends Context>(
+  tasks: (Task<TContext> | false | null | undefined)[]
+) {
   return {
     run: async (initialContext: TContext) => {
       const startTime = Date.now()
       let context = initialContext
 
       for (const task of tasks) {
+        // Skip falsy values (supports conditional spreading)
+        if (!task) continue
         const taskStart = Date.now()
         const spinner = ora(task.name).start()
 

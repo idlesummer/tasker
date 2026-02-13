@@ -12,6 +12,7 @@ Basically, it's a simple way to run tasks in sequence with nice terminal spinner
 ## Features
 
 - **Task Pipeline** - Run tasks one after another, each task gets the results from the previous ones
+- **Conditional Tasks** - Use boolean expressions to conditionally include/exclude tasks
 - **CLI Spinners** - Those satisfying loading spinners powered by ora
 - **Formatters** - Helper functions to make bytes, durations, and file lists look nice
 - **TypeScript** - Full type safety so you don't shoot yourself in the foot
@@ -81,6 +82,7 @@ The `examples/` folder has working projects you can run:
 
 - **[basic-pipeline](./examples/basic-pipeline)** - Super simple example to get started
 - **[build-tool](./examples/build-tool)** - More realistic build tool with file operations
+- **[conditional-tasks](./examples/conditional-tasks)** - Demonstrates conditional task execution
 - **[formatters](./examples/formatters)** - Shows off all the formatting utilities
 
 Each example is a standalone npm package. To run one:
@@ -124,6 +126,22 @@ const result = await pipeline.run({})
 // result.context has your final context
 // result.duration is total time in ms
 ```
+
+**Conditional Tasks:**
+
+You can conditionally include tasks using boolean expressions:
+
+```typescript
+const isProduction = process.env.NODE_ENV === 'production'
+
+const pipeline = pipe([
+  { name: 'Build', run: async () => ({ built: true }) },
+  isProduction && { name: 'Minify', run: async () => ({ minified: true }) },
+  { name: 'Deploy', run: async () => ({ deployed: true }) },
+])
+```
+
+When the condition is `false`, the task is automatically skipped. See the [conditional-tasks example](./examples/conditional-tasks) for a complete demo.
 
 ### Formatters
 

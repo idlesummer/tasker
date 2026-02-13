@@ -32,6 +32,49 @@ const result = await pipeline.run({})
 console.log(result.context.count) // 1
 ```
 
+#### Conditional Tasks
+
+You can conditionally include tasks using boolean expressions. This is super useful when you want different pipelines based on configuration:
+
+```typescript
+const isProduction = process.env.NODE_ENV === 'production'
+const enableTests = !process.argv.includes('--skip-tests')
+
+const pipeline = pipe([
+  { name: 'Build', run: async () => ({ built: true }) },
+
+  // Only minify in production
+  isProduction && {
+    name: 'Minify',
+    run: async () => ({ minified: true })
+  },
+
+  // Conditionally run tests
+  enableTests && {
+    name: 'Test',
+    run: async () => ({ tested: true })
+  },
+
+  { name: 'Deploy', run: async () => ({ deployed: true }) },
+])
+```
+
+When a condition is `false`, the task is simply skipped. This works because:
+- `true && task` evaluates to `task` (the task object)
+- `false && task` evaluates to `false` (which gets filtered out)
+
+You can also combine multiple conditions:
+```typescript
+const pipeline = pipe([
+  task1,
+  isProduction && enableOptimization && optimizeTask,
+  isDevelopment && debugTask,
+  task2,
+])
+```
+
+**Note:** Falsy values (`false`, `null`, `undefined`) in the task array are automatically skipped during execution.
+
 ### Task Object
 
 Each task in your pipeline looks like this:
