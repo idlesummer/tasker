@@ -34,9 +34,7 @@ export type PipeResult<TContext extends Context> = {
  * @template TContext - The context type for the pipeline
  * @param tasks - Array of tasks (supports conditional spreading with falsy values)
  */
-export function pipe<TContext extends Context>(
-  tasks: (Task<TContext> | false | null | undefined)[]
-) {
+export function pipe<TContext extends Context>(tasks: (Task<TContext> | false | null | undefined)[]) {
   return {
     run: async (initialContext: TContext) => {
       const startTime = Date.now()
